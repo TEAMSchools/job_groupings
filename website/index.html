@@ -112,6 +112,13 @@
           guesswork about who can see what. If a permission isn't listed for your level,
           you don't have it.
         </p>
+        <p class="deny-text-second">
+          Row-level visibility is also <strong>downward-only by default</strong>: you can only
+          see records for people at a <em>lower numeric level</em> than your own.
+          You cannot see your peers, your managers, or anyone at or above your level
+          unless a <em>Peers or Above</em> grant has been explicitly issued —
+          and <strong>currently, no one holds this designation</strong>.
+        </p>
       </div>
       <div class="deny-pillars">
         <div class="deny-pillar">
@@ -123,12 +130,20 @@
           <span>Explicit grants only</span>
         </div>
         <div class="deny-pillar">
+          <span class="deny-pillar-icon">👇</span>
+          <span>Downward visibility only</span>
+        </div>
+        <div class="deny-pillar">
           <span class="deny-pillar-icon">🔁</span>
           <span>Revoked on role change</span>
         </div>
         <div class="deny-pillar">
           <span class="deny-pillar-icon">📋</span>
           <span>Every grant is auditable</span>
+        </div>
+        <div class="deny-pillar deny-pillar-rare">
+          <span class="deny-pillar-icon">🔑</span>
+          <span>Peers or Above: not currently issued</span>
         </div>
       </div>
     </div>
@@ -467,13 +482,13 @@
           <span class="scenario-dept">Math</span>
         </div>
         <div class="scenario-body">
-          <p>Default access — can see their own records and their students' academic data. Cannot see colleague salaries, PM records, or data outside their classroom.</p>
+          <p>Default access — can see their own records and their students' academic data. Cannot see colleague salaries, PM records, or any peer/above staff data.</p>
           <div class="scenario-access-list">
             <div class="access-row yes"><span class="check">✓</span> Their own staff record</div>
             <div class="access-row yes"><span class="check">✓</span> Their students' data</div>
-            <div class="access-row no"><span class="cross">✗</span> Salary data for any colleague</div>
-            <div class="access-row no"><span class="cross">✗</span> PM data for peers</div>
+            <div class="access-row no"><span class="cross">✗</span> Salary or PM data for any colleague</div>
             <div class="access-row no"><span class="cross">✗</span> Any cross-school data</div>
+            <div class="access-row no"><span class="cross">✗</span> Peers or Above — not granted (no one at Level 6 currently has this)</div>
           </div>
         </div>
       </div>
@@ -534,9 +549,64 @@
 
     </div>
 
+    <!-- Peers or Above — full-width, visually distinct -->
+    <div class="peers-card">
+      <div class="peers-card-inner">
+        <div class="peers-card-left">
+          <div class="peers-rarity-badge">Rarely Granted</div>
+          <div class="peers-icon">🔑</div>
+          <h4>Peers or Above</h4>
+          <p>
+            By default, every person can only see data for staff at a <strong>lower numeric level</strong>
+            than their own — never peers, never senior staff. The <em>Peers or Above</em> designation
+            removes this restriction: the holder can see records for people at <em>any</em> level,
+            including their own and above.
+          </p>
+          <p>
+            This is one of the most powerful permissions in the system. It is <strong>not granted
+            by job grouping</strong> — it must be explicitly assigned to an individual and requires
+            a clear, documented justification. <strong>Currently, no staff member holds this
+            designation.</strong> If ever issued, it would require explicit approval and a logged
+            reason in the audit trail.
+          </p>
+        </div>
+        <div class="peers-card-right">
+          <div class="peers-example-title">Default visibility without this grant</div>
+          <div class="peers-levels">
+            <div class="peers-level-row peers-level-you">
+              <span class="peers-level-pill" style="background:#dbeafe;color:#2563eb;">You (e.g. Level 5)</span>
+              <span class="peers-level-status peers-blocked">✗ Cannot see your own level or above</span>
+            </div>
+            <div class="peers-level-row peers-level-below">
+              <span class="peers-level-pill" style="background:#d1fae5;color:#059669;">Level 6</span>
+              <span class="peers-level-status peers-allowed">✓ Visible</span>
+            </div>
+            <div class="peers-level-row peers-level-below">
+              <span class="peers-level-pill" style="background:#fef3c7;color:#d97706;">Level 7</span>
+              <span class="peers-level-status peers-allowed">✓ Visible</span>
+            </div>
+            <div class="peers-level-row peers-level-above">
+              <span class="peers-level-pill" style="background:#ede9fe;color:#7c3aed;">Levels 1–4</span>
+              <span class="peers-level-status peers-blocked">✗ Blocked — need Peers or Above</span>
+            </div>
+            <div class="peers-example-title" style="margin-top:16px; color:#fca5a5;">⛔ Current status</div>
+            <div class="peers-holder" style="border-left-color:rgba(248,113,113,.5); color:rgba(255,255,255,.9); background:rgba(239,68,68,.12);">
+              <strong>Not issued to anyone.</strong> No staff member currently holds this designation.
+            </div>
+            <div class="peers-example-title" style="margin-top:12px;">Potential future candidates (require explicit approval)</div>
+            <div class="peers-holder">HR Team (to view all staff records for HR purposes)</div>
+            <div class="peers-holder">Data Team (for building org-wide reports and pipelines)</div>
+            <div class="peers-holder">Finance / Accounting / Compliance (for audits)</div>
+            <div class="peers-holder">CEO designation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="special-note">
       <strong>Note:</strong> Special designations are layered <em>on top of</em> a person's standard level permissions.
       They are assigned per-individual and should be reviewed during onboarding, role changes, and offboarding.
+      <em>Peers or Above</em> in particular should be treated as a privileged grant and audited regularly.
     </div>
   </div>
 </section>

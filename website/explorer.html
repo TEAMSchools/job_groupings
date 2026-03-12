@@ -58,17 +58,25 @@
         </select>
       </div>
       <div class="control-group">
-        <label class="control-label" for="filter-perm">Has permission</label>
+        <label class="control-label" for="filter-perm">Has permission / designation</label>
         <select id="filter-perm" class="control-input">
           <option value="">Any</option>
-          <option value="Salary">Salary access</option>
-          <option value="PM Data">PM Data access</option>
-          <option value="Survey Access">Survey access</option>
-          <option value="All Locations">All Locations</option>
-          <option value="All Locations in Region">All Locations in Region</option>
-          <option value="User's School Only">User's School Only</option>
-          <option value="All Staff/Students">All Staff/Students</option>
-          <option value="Teachers & Students Only">Teachers &amp; Students Only</option>
+          <optgroup label="Data Access">
+            <option value="Salary">Salary access</option>
+            <option value="PM Data">PM Data access</option>
+            <option value="Survey Access">Survey access</option>
+            <option value="All Locations">All Locations</option>
+            <option value="All Locations in Region">All Locations in Region</option>
+            <option value="User's School Only">User's School Only</option>
+            <option value="All Staff/Students">All Staff/Students</option>
+            <option value="Teachers &amp; Students Only">Teachers &amp; Students Only</option>
+          </optgroup>
+          <optgroup label="Special Team Designations">
+            <option value="Data Team">Data Team</option>
+            <option value="HR Team">HR Team</option>
+            <option value="Finance, Accounting, and Compliance Team">Finance / Accounting / Compliance</option>
+            <option value="CEO">CEO</option>
+          </optgroup>
         </select>
       </div>
     </div>
@@ -125,41 +133,8 @@
     <h3 class="drawer-section-title">Data Access Permissions</h3>
     <div id="drawer-permissions" class="drawer-permissions"></div>
 
-    <h3 class="drawer-section-title">Special Designations</h3>
-    <div class="drawer-special-note">
-      Special designations are applied per-individual and override the standard level rules.
-      They must be manually assigned during onboarding or role changes.
-    </div>
-    <div class="drawer-special-grid">
-      <div class="drawer-special-item">
-        <span class="drawer-special-icon">👤</span>
-        <div>
-          <div class="drawer-special-name">CEO</div>
-          <div class="drawer-special-desc">Full access to all data</div>
-        </div>
-      </div>
-      <div class="drawer-special-item">
-        <span class="drawer-special-icon">📊</span>
-        <div>
-          <div class="drawer-special-name">Data Team</div>
-          <div class="drawer-special-desc">Full access to all data</div>
-        </div>
-      </div>
-      <div class="drawer-special-item">
-        <span class="drawer-special-icon">🧑‍💼</span>
-        <div>
-          <div class="drawer-special-name">HR Team</div>
-          <div class="drawer-special-desc">All staff data access</div>
-        </div>
-      </div>
-      <div class="drawer-special-item">
-        <span class="drawer-special-icon">💰</span>
-        <div>
-          <div class="drawer-special-name">Finance / Accounting / Compliance</div>
-          <div class="drawer-special-desc">Full access to all data</div>
-        </div>
-      </div>
-    </div>
+    <h3 class="drawer-section-title">Special Team Designations</h3>
+    <div id="drawer-special"></div>
   </div>
 </aside>
 
@@ -179,7 +154,7 @@ const LEVEL_META = {
 
 // Permission display names and icons
 const PERM_META = {
-  'Peers or Above':                        { icon: '👥', label: 'Peers or Above',              cat: 'row' },
+  'Peers or Above':                        { icon: '🔑', label: 'Peers or Above',              cat: 'visibility' },
   'All Locations':                          { icon: '🌐', label: 'All Locations',                cat: 'location' },
   "User's Department Only":                { icon: '🏢', label: "User's Department Only",       cat: 'location' },
   'All Schools':                            { icon: '🏫', label: 'All Schools',                  cat: 'location' },
@@ -204,7 +179,11 @@ const PERM_SUMMARY_COLS = [
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-let filteredData = [...JOB_DATA];
+// Exclude Additional Work Assignment entries — these are temporary duty slots,
+// not standing roles, and clutter the job explorer.
+const DISPLAY_DATA = JOB_DATA.filter(d => d.dept.toLowerCase() !== 'additional work assignment');
+
+let filteredData = [...DISPLAY_DATA];
 let sortKey = 'level';
 let sortDir = 1;
 
@@ -231,7 +210,7 @@ function init() {
 }
 
 function populateDeptFilter() {
-  const depts = [...new Set(JOB_DATA.map(d => d.dept))].sort();
+  const depts = [...new Set(DISPLAY_DATA.map(d => d.dept))].sort();
   const sel = document.getElementById('filter-dept');
   depts.forEach(d => {
     const opt = document.createElement('option');
@@ -248,7 +227,7 @@ function applyFilters() {
   const level  = document.getElementById('filter-level').value;
   const perm   = document.getElementById('filter-perm').value;
 
-  filteredData = JOB_DATA.filter(d => {
+  filteredData = DISPLAY_DATA.filter(d => {
     if (q && !d.title.toLowerCase().includes(q) && !d.dept.toLowerCase().includes(q) && !d.grouping.toLowerCase().includes(q)) return false;
     if (dept && d.dept !== dept) return false;
     if (level && d.level !== parseInt(level)) return false;
@@ -262,16 +241,16 @@ function applyFilters() {
 
 function updateResultCount() {
   const el = document.getElementById('result-count');
-  el.textContent = filteredData.length === JOB_DATA.length
-    ? `Showing all ${JOB_DATA.length} job–department combinations`
-    : `Showing ${filteredData.length} of ${JOB_DATA.length} job–department combinations`;
+  el.textContent = filteredData.length === DISPLAY_DATA.length
+    ? `Showing all ${DISPLAY_DATA.length} job–department combinations`
+    : `Showing ${filteredData.length} of ${DISPLAY_DATA.length} job–department combinations`;
 }
 
 // ── Stats bar ─────────────────────────────────────────────────────────────────
 
 function renderStats() {
   const counts = {};
-  JOB_DATA.forEach(d => { counts[d.level] = (counts[d.level] || 0) + 1; });
+  DISPLAY_DATA.forEach(d => { counts[d.level] = (counts[d.level] || 0) + 1; });
   const row = document.getElementById('stats-row');
   row.innerHTML = Object.entries(LEVEL_META).map(([lvl, meta]) =>
     `<div class="stat-chip" style="--chip-color:${meta.color}; --chip-bg:${meta.bg};">
@@ -305,7 +284,7 @@ function renderTable() {
     const meta = LEVEL_META[d.level] || { color: '#999', bg: '#eee', label: 'Unknown' };
     const accessSummary = buildAccessSummary(d.permissions);
     return `
-      <tr onclick="openDrawer(${JOB_DATA.indexOf(d)})" class="table-row" tabindex="0">
+      <tr onclick="openDrawer(${DISPLAY_DATA.indexOf(d)})" class="table-row" tabindex="0">
         <td class="td-title">${esc(d.title)}</td>
         <td class="td-dept">${esc(d.dept)}</td>
         <td class="td-grouping">${esc(d.grouping)}</td>
@@ -329,13 +308,13 @@ function buildAccessSummary(perms) {
     });
   return chips.length
     ? chips.join('')
-    : '<span class="access-mini-none">Default access only</span>';
+    : '<span class="access-mini-none">Self and direct reports only</span>';
 }
 
 // ── Detail drawer ─────────────────────────────────────────────────────────────
 
 function openDrawer(idx) {
-  const d = JOB_DATA[idx];
+  const d = DISPLAY_DATA[idx];
   const meta = LEVEL_META[d.level] || { color: '#999', bg: '#eee', label: 'Unknown' };
 
   document.getElementById('drawer-title').textContent = d.title;
@@ -359,15 +338,52 @@ function openDrawer(idx) {
     special:  '⭐ Special',
   };
 
-  // Non-special permissions from PERM_META
-  const nonSpecialCols = PERMISSION_COLS.filter(c =>
-    (PERM_META[c] || {}).cat !== 'special'
-  );
-  const specialCols = PERMISSION_COLS.filter(c =>
-    (PERM_META[c] || {}).cat === 'special'
-  );
+  // Standard permissions (excludes 'visibility' and 'special' categories)
+  const nonSpecialCols = PERMISSION_COLS.filter(c => {
+    const cat = (PERM_META[c] || {}).cat;
+    return cat !== 'special' && cat !== 'visibility';
+  });
 
   let html = '';
+
+  // ── Peers or Above: always rendered first, with level-aware explanation ──
+  const peersGranted = d.permissions['Peers or Above'];
+  if (peersGranted) {
+    html += `<div class="perm-group perm-group-peers-granted">
+      <div class="perm-group-title">🔑 Row Visibility</div>
+      <div class="perm-row granted peers-granted-row">
+        <span class="perm-icon">✓</span>
+        <div>
+          <span class="perm-label">🔑 Peers or Above</span>
+          <div class="perm-sublabel perm-sublabel-rare">
+            Rarely granted · Can see records for staff at <strong>all levels</strong>, including peers and senior staff.
+          </div>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    const below = d.level < 7 ? `Levels ${d.level + 1}–7` : 'none (highest level)';
+    const blocked = d.level > 1 ? `Levels 1–${d.level} (including peers)` : 'none';
+    html += `<div class="perm-group">
+      <div class="perm-group-title">🔑 Row Visibility</div>
+      <div class="perm-row granted">
+        <span class="perm-icon">✓</span>
+        <div>
+          <span class="perm-label">👇 Downward visibility</span>
+          <div class="perm-sublabel">Can see records for staff below this level: <strong>${below}</strong></div>
+        </div>
+      </div>
+      <div class="perm-row denied">
+        <span class="perm-icon">✗</span>
+        <div>
+          <span class="perm-label">🔑 Peers or Above — not granted</span>
+          <div class="perm-sublabel perm-sublabel-warn">
+            Cannot see: <strong>${blocked}</strong>. Requires explicit Peers or Above grant (issued to very few staff).
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
 
   // Standard permissions (non-special)
   nonSpecialCols.forEach(col => {
@@ -390,6 +406,42 @@ function openDrawer(idx) {
   });
 
   document.getElementById('drawer-permissions').innerHTML = html;
+
+  // Special team designations (data-driven)
+  const SPECIAL_META = {
+    'Data Team':                              { icon: '📊', desc: 'Can see all data across the organization' },
+    'CEO':                                    { icon: '👤', desc: 'Can see all data — executive-level access' },
+    'HR Team':                                { icon: '🧑‍💼', desc: 'Can see all staff records org-wide' },
+    'Finance, Accounting, and Compliance Team': { icon: '💰', desc: 'Can see all financial and compliance data' },
+  };
+  const specialOrder = ['Data Team', 'HR Team', 'Finance, Accounting, and Compliance Team', 'CEO'];
+  const anyGranted = specialOrder.some(k => d.permissions[k]);
+
+  let specialHtml = `<div class="drawer-special-note">
+    Designations reflect the default for this role's department.
+    They may be granted or revoked per-individual by an admin during onboarding or role changes.
+  </div>
+  <div class="special-desig-grid">`;
+
+  specialOrder.forEach(key => {
+    const granted = d.permissions[key];
+    const sm = SPECIAL_META[key] || { icon: '·', desc: '' };
+    specialHtml += `
+    <div class="special-desig-item ${granted ? 'special-desig-granted' : 'special-desig-denied'}">
+      <span class="special-desig-icon">${sm.icon}</span>
+      <div>
+        <div class="special-desig-name">${esc(key)}</div>
+        <div class="special-desig-status">${granted
+          ? `<span class="special-desig-yes">✓ Designated for this role</span>`
+          : `<span class="special-desig-no">Not this role's default</span>`
+        }</div>
+        <div class="special-desig-desc">${sm.desc}</div>
+      </div>
+    </div>`;
+  });
+
+  specialHtml += `</div>`;
+  document.getElementById('drawer-special').innerHTML = specialHtml;
 
   document.getElementById('detail-drawer').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('open');

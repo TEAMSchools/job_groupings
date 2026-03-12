@@ -24,6 +24,9 @@ Workflow:
     5. Export a full permissions CSV (one row per job, boolean column per rule):
            python job_groupings_classifier.py export-permissions
 
+    6. Regenerate the website data file from the permissions CSV:
+           python job_groupings_classifier.py export-data-js
+
 Environment variables:
     SLACK_WEBHOOK_URL   Incoming webhook for unmatched-job alerts (optional).
 
@@ -120,6 +123,20 @@ SCHOOL_DEPARTMENTS: set[str] = {
 }
 
 ADDITIONAL_WORK_DEPT = 'additional work assignment'
+
+# ── Special designation departments ───────────────────────────────────────────
+# Maps lowercase department names to the special designation rule name that
+# applies to all staff in that department by default.  These align with the
+# "Special" rule-type rows in permission_designations.csv.  Admins may grant
+# or revoke these per-individual; these defaults reflect the typical expectation.
+SPECIAL_DESIGNATION_DEPARTMENTS: dict[str, str] = {
+    'data':            'Data Team',
+    'human resources': 'HR Team',
+    'accounting':      'Finance, Accounting, and Compliance Team',
+    'finance':         'Finance, Accounting, and Compliance Team',
+    'compliance':      'Finance, Accounting, and Compliance Team',
+    'executive':       'CEO',
+}
 
 # Frontline school operations titles (Level 6 ADSOs/Ops-SOMs/AOMs/Receptionists)
 FRONTLINE_OPS_TITLES: set[str] = {
@@ -471,7 +488,9 @@ def export_permissions_csv(
 
         for row in reader:
             grouping = row['Grouping'].strip()
+            dept_lower = row['Departments'].strip().lower()
             granted = GROUPING_PERMISSIONS.get(grouping, set())
+            special_designation = SPECIAL_DESIGNATION_DEPARTMENTS.get(dept_lower)
 
             out_row: dict = {
                 'Jobs': row['Jobs'],
@@ -480,12 +499,73 @@ def export_permissions_csv(
                 'Level': row['Level'],
             }
             for rule in rule_names:
-                out_row[rule] = 'TRUE' if rule in granted else 'FALSE'
+                if rule in granted:
+                    out_row[rule] = 'TRUE'
+                elif special_designation is not None and rule == special_designation:
+                    out_row[rule] = 'TRUE'
+                else:
+                    out_row[rule] = 'FALSE'
 
             writer.writerow(out_row)
             rows_written += 1
 
     print(f"Permissions CSV saved to {output_path}  ({rows_written} rows, {len(rule_names)} rule columns)")
+
+
+# ── Website data JS export ────────────────────────────────────────────────────
+
+DATA_JS_PATH = _HERE / 'website' / 'data.js'
+
+
+def export_data_js(
+    permissions_path: Path = PERMISSIONS_OUTPUT_PATH,
+    output_path: Path = DATA_JS_PATH,
+) -> None:
+    """
+    Generate website/data.js from job_groupings_with_permissions.csv.
+
+    Produces:
+        const JOB_DATA = [...];     // one object per job-department pair
+        const PERMISSION_COLS = [...];  // ordered list of permission column names
+
+    Re-run this after export_permissions_csv() to refresh the explorer site.
+    """
+    rows: list[dict] = []
+    perm_cols: list[str] = []
+
+    with open(permissions_path, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        base_cols = {'Jobs', 'Departments', 'Grouping', 'Level'}
+        # Capture permission column order from the first file scan
+        perm_cols = [c for c in (reader.fieldnames or []) if c not in base_cols]
+
+        for row in reader:
+            level_raw = row.get('Level', '').strip()
+            level_val = int(level_raw) if level_raw.isdigit() else None
+            perms = {col: row[col].strip().upper() == 'TRUE' for col in perm_cols}
+            rows.append({
+                'title': row['Jobs'].strip(),
+                'dept': row['Departments'].strip(),
+                'grouping': row['Grouping'].strip(),
+                'level': level_val,
+                'permissions': perms,
+            })
+
+    perm_cols_json = json.dumps(perm_cols, indent=2)
+    rows_json = json.dumps(rows, indent=2)
+
+    output_path.write_text(
+        f'// Auto-generated from {permissions_path.name}\n'
+        f'// Re-run: python job_groupings_classifier.py export-permissions'
+        f', then export-data-js\n\n'
+        f'const JOB_DATA = {rows_json};\n\n'
+        f'const PERMISSION_COLS = {perm_cols_json};\n',
+        encoding='utf-8',
+    )
+    print(
+        f"Data JS saved to {output_path}\n"
+        f"  {len(rows)} job entries, {len(perm_cols)} permission columns"
+    )
 
 
 # ── Slack alert ───────────────────────────────────────────────────────────────
@@ -653,6 +733,9 @@ if __name__ == '__main__':
 
     elif args[0] == 'export-permissions':
         export_permissions_csv()
+
+    elif args[0] == 'export-data-js':
+        export_data_js()
 
     else:
         print(__doc__)
