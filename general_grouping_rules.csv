@@ -1,0 +1,15 @@
+﻿Grouping,Level,Includes,Add-in Permissions Beyond Default
+Chief Level (1),1,KTAF Chiefs and Co-Presidents,"All Locations, All Staff/Students, Salary, PM Data, Survey Access"
+"EDs, HOSs, MDOs (2)",2,"Senior Regional Leaders: Executive Directors, Heads of schools and MDOs","All Locations in Region, All Staff/Students, Salary, PM Data, Survey Access"
+KTAF or Regional Managing Director (3),3,"Room 9/10/11 staff that are Managing Directors, Deputy Chiefs","All Locations, All Staff/Students, Salary, PM Data, Survey Access"
+School Leader (4),4,The named school leader of one of our schools or a School Leader in Residence,"User’s School Only, All Staff/Students, Salary, PM Data, Survey Access"
+DSOs (4),4,Directors of Campus or School Operations. On the DSO or DCO salary scale,"User’s School Only, All Staff/Students, Salary, PM Data, Survey Access"
+KTAF or Regional Director (4),4,"Room 9/10/11 staff that are Directors or Manage Managers, Achievement Directors","All Locations, User's Department Only, All Staff/Students, Salary, PM Data, Survey Access"
+Assistant School Leaders (5),5,An assistant school leader who is on the AP salary scale OR a school leader in residence.,"User’s School Only, Teachers & Students Only, Salary, PM Data, Survey Access"
+KTAF or Regional Staff (5),5,Room 9/10/11 staff. Individual contributors and non-Directors who manage individual contributors,
+Teacher (6),6,Is a lead teacher on the lead teacher salary rule system,
+Teacher in Residence (6),6,Is a teacher in residence on the tir salary rule system,
+Deans (6),6,Job title includes Dean,
+"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,Frontline Operations teammates in schools. They have specific roles related to operations and often report directly to the DSO,
+School-based Non-Instructional Staff (6),6,"All School based non-instructional staff who do not fall into another category. Generally frontline, non-teachers.",
+Intern (7),7,"Interns, working in the summer or on a temporary basis during the school year. ",

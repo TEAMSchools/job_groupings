@@ -1,0 +1,288 @@
+Jobs,Departments,Grouping,Level,Confidence,Notes
+Achievement Director,Special Education,KTAF or Regional Director (4),4,high,
+After School Program Assignment,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Aide - Non-Instructional,Operations,School-based Non-Instructional Staff (6),6,high,
+Assistant,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Assistant Dean,Student Support,Deans (6),6,high,
+Assistant School Leader,School Leadership,Assistant School Leaders (5),5,high,
+"Assistant School Leader, School Culture",School Leadership,Assistant School Leaders (5),5,high,
+"Assistant School Leader, SPED",School Leadership,Assistant School Leaders (5),5,high,
+Associate,"Marketing, Comms, and Enrollment",KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Marketing, Comms, and Enrollment"" — individual contributor assumed"
+Associate,Operations,School-based Non-Instructional Staff (6),6,medium,Operations dept — could be school or central ops; verify
+Associate Director,KIPP Forward,KTAF or Regional Staff (5),5,medium,KIPP Forward management/coordinator role — individual contributor assumed
+Associate Director,Operations,School-based Non-Instructional Staff (6),6,medium,Operations dept — could be school or central ops; verify
+Associate Director,Student Support,School-based Non-Instructional Staff (6),6,medium,"School dept ""Student Support"" — no specific rule matched; treated as non-instructional"
+Associate Director,Teaching and Learning,KTAF or Regional Staff (5),5,medium,Associate Director assumed Level 5; upgrade to Level 4 if they manage managers
+Associate Director of School Operations,Operations,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Behavior Analyst,Student Support,School-based Non-Instructional Staff (6),6,high,
+Behavior Specialist,Student Support,School-based Non-Instructional Staff (6),6,high,
+Campus Facilities Specialist 1,Operations,School-based Non-Instructional Staff (6),6,high,
+Campus Facilities Specialist 2,Operations,School-based Non-Instructional Staff (6),6,high,
+Canvasser,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+College Placement Counselor,KIPP Forward,School-based Non-Instructional Staff (6),6,high,
+Compliance Manager,Special Education,School-based Non-Instructional Staff (6),6,medium,"School dept ""Special Education"" — no specific rule matched; treated as non-instructional"
+Coordinator,KIPP Forward,KTAF or Regional Staff (5),5,medium,KIPP Forward management/coordinator role — individual contributor assumed
+Coordinator,"Marketing, Comms, and Enrollment",KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Marketing, Comms, and Enrollment"" — individual contributor assumed"
+Coordinator,School Support,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""School Support"" — individual contributor assumed"
+Coordinator (Part-Time),"Marketing, Comms, and Enrollment",KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Marketing, Comms, and Enrollment"" — individual contributor assumed"
+Counselor,KIPP Forward,School-based Non-Instructional Staff (6),6,high,
+Counselor,Student Support,School-based Non-Instructional Staff (6),6,high,
+Custodian,Operations,School-based Non-Instructional Staff (6),6,high,
+Dean,School Leadership,Deans (6),6,high,
+Dean of Students,School Leadership,Deans (6),6,high,
+Director,KIPP Forward,KTAF or Regional Director (4),4,medium,KIPP Forward Director — verify school-embedded vs central
+Director,"Marketing, Comms, and Enrollment",KTAF or Regional Director (4),4,high,
+Director,Operations,KTAF or Regional Director (4),4,medium,"Director in ""Operations"" — confirm Level 4 vs Level 6"
+Director,School Support,KTAF or Regional Director (4),4,high,
+Director,Special Education,KTAF or Regional Director (4),4,medium,"Director in ""Special Education"" — confirm Level 4 vs Level 6"
+Director,Student Experience,KTAF or Regional Director (4),4,high,
+Director,Student Support,KTAF or Regional Director (4),4,medium,"Director in ""Student Support"" — confirm Level 4 vs Level 6"
+Director Campus Operations,Operations,DSOs (4),4,high,
+Director of Social Work,Student Support,KTAF or Regional Director (4),4,medium,"Director in ""Student Support"" — confirm Level 4 vs Level 6"
+Director School Operations,Operations,DSOs (4),4,high,
+Extra-Curricular Assignment,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Fellow,KIPP Forward,Intern (7),7,high,
+Fellow School Operations Director,Operations,DSOs (4),4,high,
+Head of Schools,School Support,"EDs, HOSs, MDOs (2)",2,high,
+Head of Schools in Residence,School Support,"EDs, HOSs, MDOs (2)",2,high,
+Home Instructor,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Intern,KIPP Forward,Intern (7),7,high,
+Intern,"Marketing, Comms, and Enrollment",Intern (7),7,high,
+Intern,Operations,Intern (7),7,high,
+Intern,Social Work,Intern (7),7,high,
+Intern,Special Education,Intern (7),7,high,
+Intern,Technology,Intern (7),7,high,
+Learning Disabilities Teacher Consultant,Special Education,School-based Non-Instructional Staff (6),6,high,
+Learning Specialist,Special Education,School-based Non-Instructional Staff (6),6,high,
+Learning Specialist Coordinator,Special Education,School-based Non-Instructional Staff (6),6,high,
+Licensed Practical Nurse,Operations,School-based Non-Instructional Staff (6),6,high,
+Manager,KIPP Forward,KTAF or Regional Staff (5),5,medium,KIPP Forward management/coordinator role — individual contributor assumed
+Manager,"Marketing, Comms, and Enrollment",KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Marketing, Comms, and Enrollment"" — individual contributor assumed"
+Manager,Operations,School-based Non-Instructional Staff (6),6,medium,Operations dept — could be school or central ops; verify
+Manager,School Support,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""School Support"" — individual contributor assumed"
+Manager,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Managing Director,School Support,KTAF or Regional Managing Director (3),3,high,
+Managing Director of School Operations,Operations,"EDs, HOSs, MDOs (2)",2,high,
+Occupational Therapist,Special Education,School-based Non-Instructional Staff (6),6,high,
+Operations Associate,Operations,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Operations Coordinator,Operations,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Paraprofessional,Special Education,School-based Non-Instructional Staff (6),6,high,
+Porter,Operations,School-based Non-Instructional Staff (6),6,high,
+Praxis Tutor,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Receptionist,Operations,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Regional Facilities Manager,Operations,School-based Non-Instructional Staff (6),6,high,
+Registered Nurse,Operations,School-based Non-Instructional Staff (6),6,high,
+School Facilities Specialist 1,Operations,School-based Non-Instructional Staff (6),6,high,
+School Facilities Specialist 2,Operations,School-based Non-Instructional Staff (6),6,high,
+School Leader,School Leadership,School Leader (4),4,high,
+School Leader in Residence,School Leadership,School Leader (4),4,high,
+School Operations Manager,Operations,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+School Psychologist,Special Education,School-based Non-Instructional Staff (6),6,high,
+Security,Operations,School-based Non-Instructional Staff (6),6,high,
+Senior Custodian,Operations,School-based Non-Instructional Staff (6),6,high,
+Senior Manager,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Senior Specialist,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Social Worker,Social Work,School-based Non-Instructional Staff (6),6,high,
+Specialist,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Speech Language Pathologist,Special Education,School-based Non-Instructional Staff (6),6,high,
+Student Support Advocate,Student Support,School-based Non-Instructional Staff (6),6,high,
+Substitute Teacher,School Support,School-based Non-Instructional Staff (6),6,high,
+Summer Nurse,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Manager,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Occupational Therapist,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Paraprofessional,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Social Worker,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Speech Language Pathologist,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Student Support Advocate,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Summer Program Teacher,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Supervisor,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Teacher,Computer Science,Teacher (6),6,high,
+Teacher,Elementary,Teacher (6),6,high,
+Teacher,English,Teacher (6),6,high,
+Teacher,ES Specials,Teacher (6),6,high,
+Teacher,History,Teacher (6),6,high,
+Teacher,KIPP Forward,Teacher (6),6,high,
+Teacher,Math,Teacher (6),6,high,
+Teacher,MS Enrichment,Teacher (6),6,high,
+Teacher,Music,Teacher (6),6,high,
+Teacher,Physical Education,Teacher (6),6,high,
+Teacher,School Support,Teacher (6),6,high,
+Teacher,Science,Teacher (6),6,high,
+Teacher,Special Education,Teacher (6),6,high,
+Teacher,Visual and Performing Arts,Teacher (6),6,high,
+Teacher,World Languages,Teacher (6),6,high,
+Teacher,Writing,Teacher (6),6,high,
+Teacher ESL,Special Education,Teacher (6),6,high,
+Teacher in Residence,Elementary,Teacher in Residence (6),6,high,
+Teacher in Residence,High,Teacher in Residence (6),6,high,
+Teacher in Residence,Middle,Teacher in Residence (6),6,high,
+Teacher in Residence ESL,Special Education,Teacher in Residence (6),6,high,
+Team and Family Couselor,KIPP Forward,School-based Non-Instructional Staff (6),6,high,
+Aide - Non-Instructional - Level II,Operations,School-based Non-Instructional Staff (6),6,high,
+Associate Director,"Marketing, Comms, and Enrollment",KTAF or Regional Staff (5),5,medium,Associate Director assumed Level 5; upgrade to Level 4 if they manage managers
+Chief Of Staff,School Support,Chief Level (1),1,high,
+Deputy Head of Schools,School Support,"EDs, HOSs, MDOs (2)",2,high,
+Instructional Aide,Elementary,School-based Non-Instructional Staff (6),6,high,
+Instructor in Residence,Elementary,Teacher in Residence (6),6,high,
+Instructor in Residence,Middle,Teacher in Residence (6),6,high,
+Licensed Security Officer,Operations,School-based Non-Instructional Staff (6),6,high,
+Managing Director,Student Experience,KTAF or Regional Managing Director (3),3,high,
+Mental Health Counselor,Social Work,School-based Non-Instructional Staff (6),6,high,
+Office Manager,Operations,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Accountant,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Achievement Director,KIPP Forward,KTAF or Regional Director (4),4,high,
+Achievement Director,Teaching and Learning,KTAF or Regional Director (4),4,high,
+Analyst,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Analyst,Data,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Data"" — individual contributor assumed"
+Analyst,Finance,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Finance"" — individual contributor assumed"
+Analyst,Teaching and Learning,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Teaching and Learning"" — individual contributor assumed"
+Associate,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Associate,Advocacy,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Advocacy"" — individual contributor assumed"
+Associate,Data,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Data"" — individual contributor assumed"
+Associate,Development,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Development"" — individual contributor assumed"
+Associate,Finance,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Finance"" — individual contributor assumed"
+Associate,Innovation,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Innovation"" — individual contributor assumed"
+Associate,Leadership Development,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Leadership Development"" — individual contributor assumed"
+Associate,Talent Acquisition,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Talent Acquisition"" — individual contributor assumed"
+Associate,Teaching and Learning,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Teaching and Learning"" — individual contributor assumed"
+Associate Director,Data,KTAF or Regional Staff (5),5,medium,Associate Director assumed Level 5; upgrade to Level 4 if they manage managers
+Associate Director,Talent Acquisition,KTAF or Regional Staff (5),5,medium,Associate Director assumed Level 5; upgrade to Level 4 if they manage managers
+Associate Temporary,Human Resources,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Human Resources"" — individual contributor assumed"
+Associate Temporary,Innovation,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Innovation"" — individual contributor assumed"
+Associate Temporary,KIPP Forward,KTAF or Regional Staff (5),5,medium,KIPP Forward management/coordinator role — individual contributor assumed
+Associate Temporary,Talent Acquisition,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Talent Acquisition"" — individual contributor assumed"
+Chief,Growth,Chief Level (1),1,high,
+Chief Academic Officer,Teaching and Learning,Chief Level (1),1,high,
+Chief College and Career Officer,KIPP Forward,Chief Level (1),1,high,
+Chief Development Officer,Development,Chief Level (1),1,high,
+Chief Equity Strategist,Executive,Chief Level (1),1,high,
+Chief Equity Strategist,"Race, Equity, Inclusion",Chief Level (1),1,high,
+Chief Executive Officer,Executive,Chief Level (1),1,high,
+Chief External Officer,Development,Chief Level (1),1,high,
+Chief Financial Officer,Finance,Chief Level (1),1,high,
+Chief Of Staff,Executive,Chief Level (1),1,high,
+Chief Of Staff,Leadership Development,Chief Level (1),1,high,
+Chief Operating Officer,Operations,Chief Level (1),1,high,
+Chief People Officer,Leadership Development,Chief Level (1),1,high,
+Co-President,Executive,Chief Level (1),1,high,
+College Persistence Counselor,KIPP Forward,School-based Non-Instructional Staff (6),6,high,
+College to Career Manager,KIPP Forward,KTAF or Regional Staff (5),5,medium,KIPP Forward role — no specific rule matched; review grouping
+Controller,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Coordinator,Administration and Events,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Administration and Events"" — individual contributor assumed"
+Coordinator,Advocacy,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Advocacy"" — individual contributor assumed"
+Coordinator,Development,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Development"" — individual contributor assumed"
+Coordinator,Human Resources,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Human Resources"" — individual contributor assumed"
+Coordinator,Operations,School-based Non-Instructional Staff (6),6,medium,Operations dept — could be school or central ops; verify
+Coordinator,Talent Acquisition,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Talent Acquisition"" — individual contributor assumed"
+Coordinator,Teaching and Learning,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Teaching and Learning"" — individual contributor assumed"
+Coordinator (Part-Time),Development,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Development"" — individual contributor assumed"
+Data and Operations Manager,KIPP Forward,KTAF or Regional Staff (5),5,medium,KIPP Forward role — no specific rule matched; review grouping
+Deputy,Executive,"EDs, HOSs, MDOs (2)",2,high,
+Deputy,Development,KTAF or Regional Managing Director (3),3,medium,"Deputy in ""Development"" — may be Level 2 or 3; review seniority"
+Deputy,Teaching and Learning,KTAF or Regional Managing Director (3),3,medium,"Deputy in ""Teaching and Learning"" — may be Level 2 or 3; review seniority"
+Director,Accounting,KTAF or Regional Director (4),4,high,
+Director,Administration and Events,KTAF or Regional Director (4),4,high,
+Director,Advocacy,KTAF or Regional Director (4),4,high,
+Director,Data,KTAF or Regional Director (4),4,high,
+Director,Development,KTAF or Regional Director (4),4,high,
+Director,Facilities,KTAF or Regional Director (4),4,high,
+Director,Finance,KTAF or Regional Director (4),4,high,
+Director,Human Resources,KTAF or Regional Director (4),4,high,
+Director,Innovation,KTAF or Regional Director (4),4,high,
+Director,Leadership Development,KTAF or Regional Director (4),4,high,
+Director,Real Estate,KTAF or Regional Director (4),4,high,
+Director,Real Estate and Facilities,KTAF or Regional Director (4),4,high,
+Director,Special Projects,KTAF or Regional Director (4),4,high,
+Director,Talent Acquisition,KTAF or Regional Director (4),4,high,
+Director,Teacher Development,KTAF or Regional Director (4),4,high,
+Director,Teaching And Learning,KTAF or Regional Director (4),4,high,
+Director,Technology,KTAF or Regional Director (4),4,high,
+Director College Persistence,KIPP Forward,KTAF or Regional Director (4),4,medium,KIPP Forward Director — verify school-embedded vs central
+Director Deputy,Development,KTAF or Regional Director (4),4,high,
+Director Elementary Literacy Curriculum,Teaching and Learning,KTAF or Regional Director (4),4,high,
+Director Employee Relations,Human Resources,KTAF or Regional Director (4),4,high,
+Director Foundation and Corporate Giving,Development,KTAF or Regional Director (4),4,high,
+Director High School Literacy Curriculum,Teaching and Learning,KTAF or Regional Director (4),4,high,
+Director Literacy Achievement,Teaching and Learning,KTAF or Regional Director (4),4,high,
+Director Math Achievement,Teaching and Learning,KTAF or Regional Director (4),4,high,
+Director Middle School Literacy Curriculum,Teaching and Learning,KTAF or Regional Director (4),4,high,
+Director of Accounting,Accounting,KTAF or Regional Director (4),4,high,
+Director Purchasing,Purchasing,KTAF or Regional Director (4),4,high,
+Director Strategic Initiatives,Development,KTAF or Regional Director (4),4,high,
+"Director, College and Career Placement",KIPP Forward,KTAF or Regional Director (4),4,medium,KIPP Forward Director — verify school-embedded vs central
+"Director, College and Career Readiness",KIPP Forward,KTAF or Regional Director (4),4,medium,KIPP Forward Director — verify school-embedded vs central
+"Director, Employee Relations",Human Resources,KTAF or Regional Director (4),4,high,
+Engineer,Data,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Data"" — individual contributor assumed"
+Executive Assistant,Executive,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Executive"" — individual contributor assumed"
+Executive Director,Executive,"EDs, HOSs, MDOs (2)",2,high,
+Generalist,Human Resources,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Human Resources"" — individual contributor assumed"
+Intern,Accounting,Intern (7),7,high,
+Intern,Data,Intern (7),7,high,
+Intern,Development,Intern (7),7,high,
+Intern,Facilities,Intern (7),7,high,
+Intern,Human Resources,Intern (7),7,high,
+Intern,Innovation,Intern (7),7,high,
+Intern,Interns,Intern (7),7,high,
+Intern,Leadership Development,Intern (7),7,high,
+Intern,Special Projects,Intern (7),7,high,
+Intern,Teaching and Learning,Intern (7),7,high,
+Junior Accountant,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Manager,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Manager,Advocacy,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Advocacy"" — individual contributor assumed"
+Manager,Compliance,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Compliance"" — individual contributor assumed"
+Manager,Development,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Development"" — individual contributor assumed"
+Manager,Finance,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Finance"" — individual contributor assumed"
+Manager,Human Resources,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Human Resources"" — individual contributor assumed"
+Manager,Leadership Development,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Leadership Development"" — individual contributor assumed"
+Manager,Real Estate,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Real Estate"" — individual contributor assumed"
+Manager,Real Estate and Facilities,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Real Estate and Facilities"" — individual contributor assumed"
+Manager,Talent Acquisition,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Talent Acquisition"" — individual contributor assumed"
+Managing Director,Advocacy,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Compliance,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Data,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Development,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Facilities,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Finance,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Human Resources,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Innovation,KTAF or Regional Managing Director (3),3,high,
+Managing Director,KIPP Forward,KTAF or Regional Managing Director (3),3,medium,"Managing Director in ""KIPP Forward"" — verify region vs school scope"
+Managing Director,"Marketing, Comms, and Enrollment",KTAF or Regional Managing Director (3),3,high,
+Managing Director,Operations,KTAF or Regional Managing Director (3),3,medium,"Managing Director in ""Operations"" — verify region vs school scope"
+Managing Director,Real Estate and Facilities,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Special Education,KTAF or Regional Managing Director (3),3,medium,"Managing Director in ""Special Education"" — verify region vs school scope"
+Managing Director,Talent Acquisition,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Teacher Development,KTAF or Regional Managing Director (3),3,high,
+Managing Director,Technology,KTAF or Regional Managing Director (3),3,high,
+Managing Director Accounting,Accounting,KTAF or Regional Managing Director (3),3,high,
+Managing Director in Residence,Operations,KTAF or Regional Managing Director (3),3,medium,"Managing Director in ""Operations"" — verify region vs school scope"
+Managing Director of Growth,Operations,"EDs, HOSs, MDOs (2)",2,high,
+Managing Director of Operations,Operations,"EDs, HOSs, MDOs (2)",2,high,
+Managing Director of Teaching & Learning,Teaching and Learning,KTAF or Regional Managing Director (3),3,high,
+Operations Associate,Development,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Operations Associate,Teaching and Learning,"ADSOs, Ops-SOMs, AOMs, & Receptionists (6)",6,high,
+Purchasing Coordinator,Purchasing,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Purchasing"" — individual contributor assumed"
+Recruiter,Talent Acquisition,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Talent Acquisition"" — individual contributor assumed"
+Senior Accountant,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Senior Analyst,Data,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Data"" — individual contributor assumed"
+Social Worker,KIPP Forward,School-based Non-Instructional Staff (6),6,high,
+Special Counsel,Compliance,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Compliance"" — individual contributor assumed"
+Specialist,Accounting,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Accounting"" — individual contributor assumed"
+Specialist,Data,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Data"" — individual contributor assumed"
+Specialist,Human Resources,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Human Resources"" — individual contributor assumed"
+Specialist,"Marketing, Comms, and Enrollment",KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Marketing, Comms, and Enrollment"" — individual contributor assumed"
+Specialist,Teaching and Learning,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Teaching and Learning"" — individual contributor assumed"
+Specialist Temporary,Human Resources,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Human Resources"" — individual contributor assumed"
+System Administrator,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Systems Analyst,Data,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Data"" — individual contributor assumed"
+Systems Analyst,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Systems Engineer,Technology,KTAF or Regional Staff (5),5,medium,"Central/KTAF dept ""Technology"" — individual contributor assumed"
+Academic Interventionist,Student Support,School-based Non-Instructional Staff (6),6,high,
+Assistant School Leader,Operations,Assistant School Leaders (5),5,high,
+Associate,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Associate,Student Support,School-based Non-Instructional Staff (6),6,medium,"School dept ""Student Support"" — no specific rule matched; treated as non-instructional"
+Crossing Guard,Operations,School-based Non-Instructional Staff (6),6,high,
+ESE Teacher,Special Education,Teacher (6),6,high,
+Managing Director of Teaching & Learning,School Support,KTAF or Regional Managing Director (3),3,high,
+Saturday School Paraprofessional,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Saturday School Teacher,Additional Work Assignment,Intern (7),7,medium,Temporary/additional assignment; treated as Level 7
+Teacher Aide,Student Support,School-based Non-Instructional Staff (6),6,high,

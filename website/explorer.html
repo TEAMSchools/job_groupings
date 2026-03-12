@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Explorer · Job Grouping Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Job Grouping Framework</span>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Overview</a>
+      <a href="explorer.html" class="nav-link active">Job Explorer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Explorer header ────────────────────────────────────────────────────── -->
+<div class="explorer-header">
+  <div class="container">
+    <h1>Job Explorer</h1>
+    <p>Browse every job title, see its grouping level, and inspect the data access permissions it carries.</p>
+  </div>
+</div>
+
+<!-- ── Controls ───────────────────────────────────────────────────────────── -->
+<div class="explorer-controls">
+  <div class="container">
+    <div class="controls-row">
+      <div class="control-group" style="flex:2;">
+        <label class="control-label" for="search">Search job title</label>
+        <input id="search" type="text" class="control-input" placeholder="e.g. Director, Teacher, School Leader…" />
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="filter-dept">Department</label>
+        <select id="filter-dept" class="control-input">
+          <option value="">All departments</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="filter-level">Level</label>
+        <select id="filter-level" class="control-input">
+          <option value="">All levels</option>
+          <option value="1">Level 1 · Chief</option>
+          <option value="2">Level 2 · EDs / HOSs / MDOs</option>
+          <option value="3">Level 3 · KTAF Managing Director</option>
+          <option value="4">Level 4 · Director / School Leader</option>
+          <option value="5">Level 5 · ASL / KTAF Staff</option>
+          <option value="6">Level 6 · School-Based Staff</option>
+          <option value="7">Level 7 · Intern / Temp</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="filter-perm">Has permission</label>
+        <select id="filter-perm" class="control-input">
+          <option value="">Any</option>
+          <option value="Salary">Salary access</option>
+          <option value="PM Data">PM Data access</option>
+          <option value="Survey Access">Survey access</option>
+          <option value="All Locations">All Locations</option>
+          <option value="All Locations in Region">All Locations in Region</option>
+          <option value="User's School Only">User's School Only</option>
+          <option value="All Staff/Students">All Staff/Students</option>
+          <option value="Teachers & Students Only">Teachers &amp; Students Only</option>
+        </select>
+      </div>
+    </div>
+    <div id="result-count" class="result-count">Loading…</div>
+  </div>
+</div>
+
+<!-- ── Stats bar ──────────────────────────────────────────────────────────── -->
+<div class="stats-bar" id="stats-bar">
+  <div class="container">
+    <div class="stats-row" id="stats-row"><!-- populated by JS --></div>
+  </div>
+</div>
+
+<!-- ── Main table ─────────────────────────────────────────────────────────── -->
+<div class="explorer-body">
+  <div class="container">
+    <div class="table-wrap">
+      <table class="jobs-table" id="jobs-table">
+        <thead>
+          <tr>
+            <th data-sort="title">Job Title <span class="sort-icon">⇅</span></th>
+            <th data-sort="dept">Department <span class="sort-icon">⇅</span></th>
+            <th data-sort="grouping">Grouping <span class="sort-icon">⇅</span></th>
+            <th data-sort="level">Level <span class="sort-icon">⇅</span></th>
+            <th>Data Access</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>
+      <div id="no-results" class="no-results" style="display:none;">
+        No jobs match your filters.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Detail drawer ──────────────────────────────────────────────────────── -->
+<div id="drawer-overlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+<aside id="detail-drawer" class="detail-drawer">
+  <div class="drawer-header">
+    <div>
+      <div id="drawer-title" class="drawer-title"></div>
+      <div id="drawer-dept" class="drawer-dept"></div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div id="drawer-level-badge" class="drawer-level-badge"></div>
+    <div id="drawer-grouping" class="drawer-grouping"></div>
+
+    <h3 class="drawer-section-title">Data Access Permissions</h3>
+    <div id="drawer-permissions" class="drawer-permissions"></div>
+
+    <h3 class="drawer-section-title">Special Designations</h3>
+    <div class="drawer-special-note">
+      Special designations are applied per-individual and override the standard level rules.
+      They must be manually assigned during onboarding or role changes.
+    </div>
+    <div class="drawer-special-grid">
+      <div class="drawer-special-item">
+        <span class="drawer-special-icon">👤</span>
+        <div>
+          <div class="drawer-special-name">CEO</div>
+          <div class="drawer-special-desc">Full access to all data</div>
+        </div>
+      </div>
+      <div class="drawer-special-item">
+        <span class="drawer-special-icon">📊</span>
+        <div>
+          <div class="drawer-special-name">Data Team</div>
+          <div class="drawer-special-desc">Full access to all data</div>
+        </div>
+      </div>
+      <div class="drawer-special-item">
+        <span class="drawer-special-icon">🧑‍💼</span>
+        <div>
+          <div class="drawer-special-name">HR Team</div>
+          <div class="drawer-special-desc">All staff data access</div>
+        </div>
+      </div>
+      <div class="drawer-special-item">
+        <span class="drawer-special-icon">💰</span>
+        <div>
+          <div class="drawer-special-name">Finance / Accounting / Compliance</div>
+          <div class="drawer-special-desc">Full access to all data</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script src="data.js"></script>
+<script>
+// ── Constants ─────────────────────────────────────────────────────────────────
+
+const LEVEL_META = {
+  1: { label: 'Chief Level',                     color: '#7c3aed', bg: '#ede9fe' },
+  2: { label: 'EDs / HOSs / MDOs',               color: '#db2777', bg: '#fce7f3' },
+  3: { label: 'KTAF Managing Director',           color: '#2563eb', bg: '#dbeafe' },
+  4: { label: 'Director / School Leader',         color: '#0891b2', bg: '#cffafe' },
+  5: { label: 'ASL / KTAF Staff',                 color: '#059669', bg: '#d1fae5' },
+  6: { label: 'School-Based Staff',               color: '#d97706', bg: '#fef3c7' },
+  7: { label: 'Intern / Temp',                    color: '#6b7280', bg: '#f3f4f6' },
+};
+
+// Permission display names and icons
+const PERM_META = {
+  'Peers or Above':                        { icon: '👥', label: 'Peers or Above',              cat: 'row' },
+  'All Locations':                          { icon: '🌐', label: 'All Locations',                cat: 'location' },
+  "User's Department Only":                { icon: '🏢', label: "User's Department Only",       cat: 'location' },
+  'All Schools':                            { icon: '🏫', label: 'All Schools',                  cat: 'location' },
+  'All Locations in Region':               { icon: '📍', label: 'All Locations in Region',      cat: 'location' },
+  "User's School Only":                    { icon: '🏫', label: "User's School Only",           cat: 'location' },
+  'All Staff/Students':                    { icon: '👤', label: 'All Staff & Students',          cat: 'users' },
+  'Teachers & Students Only':              { icon: '📚', label: 'Teachers & Students Only',     cat: 'users' },
+  'Survey Access':                         { icon: '📋', label: 'Survey Access',                cat: 'column' },
+  'Salary':                                { icon: '💰', label: 'Salary Data',                  cat: 'column' },
+  'PM Data':                               { icon: '📈', label: 'PM Data',                      cat: 'column' },
+  'Data Team':                             { icon: '📊', label: 'Data Team',                    cat: 'special' },
+  'CEO':                                   { icon: '👤', label: 'CEO',                          cat: 'special' },
+  'HR Team':                               { icon: '🧑‍💼', label: 'HR Team',                     cat: 'special' },
+  'Finance, Accounting, and Compliance Team': { icon: '💰', label: 'Finance / Accounting / Compliance', cat: 'special' },
+};
+
+const PERM_SUMMARY_COLS = [
+  'All Locations', 'All Locations in Region', "User's School Only", "User's Department Only",
+  'All Staff/Students', 'Teachers & Students Only',
+  'Salary', 'PM Data', 'Survey Access',
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+let filteredData = [...JOB_DATA];
+let sortKey = 'level';
+let sortDir = 1;
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+function init() {
+  populateDeptFilter();
+  renderStats();
+  applyFilters();
+
+  document.getElementById('search').addEventListener('input', applyFilters);
+  document.getElementById('filter-dept').addEventListener('change', applyFilters);
+  document.getElementById('filter-level').addEventListener('change', applyFilters);
+  document.getElementById('filter-perm').addEventListener('change', applyFilters);
+
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (sortKey === key) sortDir *= -1;
+      else { sortKey = key; sortDir = 1; }
+      renderTable();
+    });
+  });
+}
+
+function populateDeptFilter() {
+  const depts = [...new Set(JOB_DATA.map(d => d.dept))].sort();
+  const sel = document.getElementById('filter-dept');
+  depts.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d; opt.textContent = d;
+    sel.appendChild(opt);
+  });
+}
+
+// ── Filtering & sorting ───────────────────────────────────────────────────────
+
+function applyFilters() {
+  const q      = document.getElementById('search').value.toLowerCase().trim();
+  const dept   = document.getElementById('filter-dept').value;
+  const level  = document.getElementById('filter-level').value;
+  const perm   = document.getElementById('filter-perm').value;
+
+  filteredData = JOB_DATA.filter(d => {
+    if (q && !d.title.toLowerCase().includes(q) && !d.dept.toLowerCase().includes(q) && !d.grouping.toLowerCase().includes(q)) return false;
+    if (dept && d.dept !== dept) return false;
+    if (level && d.level !== parseInt(level)) return false;
+    if (perm && !d.permissions[perm]) return false;
+    return true;
+  });
+
+  renderTable();
+  updateResultCount();
+}
+
+function updateResultCount() {
+  const el = document.getElementById('result-count');
+  el.textContent = filteredData.length === JOB_DATA.length
+    ? `Showing all ${JOB_DATA.length} job–department combinations`
+    : `Showing ${filteredData.length} of ${JOB_DATA.length} job–department combinations`;
+}
+
+// ── Stats bar ─────────────────────────────────────────────────────────────────
+
+function renderStats() {
+  const counts = {};
+  JOB_DATA.forEach(d => { counts[d.level] = (counts[d.level] || 0) + 1; });
+  const row = document.getElementById('stats-row');
+  row.innerHTML = Object.entries(LEVEL_META).map(([lvl, meta]) =>
+    `<div class="stat-chip" style="--chip-color:${meta.color}; --chip-bg:${meta.bg};">
+       <span class="stat-num">${counts[lvl] || 0}</span>
+       <span class="stat-label">Level ${lvl}</span>
+     </div>`
+  ).join('');
+}
+
+// ── Table rendering ───────────────────────────────────────────────────────────
+
+function renderTable() {
+  const sorted = [...filteredData].sort((a, b) => {
+    let av = a[sortKey] ?? '', bv = b[sortKey] ?? '';
+    if (typeof av === 'string') av = av.toLowerCase();
+    if (typeof bv === 'string') bv = bv.toLowerCase();
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+
+  const tbody = document.getElementById('table-body');
+  const noRes = document.getElementById('no-results');
+
+  if (sorted.length === 0) {
+    tbody.innerHTML = '';
+    noRes.style.display = '';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  tbody.innerHTML = sorted.map((d, i) => {
+    const meta = LEVEL_META[d.level] || { color: '#999', bg: '#eee', label: 'Unknown' };
+    const accessSummary = buildAccessSummary(d.permissions);
+    return `
+      <tr onclick="openDrawer(${JOB_DATA.indexOf(d)})" class="table-row" tabindex="0">
+        <td class="td-title">${esc(d.title)}</td>
+        <td class="td-dept">${esc(d.dept)}</td>
+        <td class="td-grouping">${esc(d.grouping)}</td>
+        <td class="td-level">
+          <span class="level-pill" style="background:${meta.bg}; color:${meta.color};">
+            ${d.level}
+          </span>
+        </td>
+        <td class="td-access">${accessSummary}</td>
+        <td class="td-detail"><span class="detail-link">Details →</span></td>
+      </tr>`;
+  }).join('');
+}
+
+function buildAccessSummary(perms) {
+  const chips = PERM_SUMMARY_COLS
+    .filter(col => perms[col])
+    .map(col => {
+      const m = PERM_META[col] || {};
+      return `<span class="access-mini-chip">${m.icon || ''} ${m.label || col}</span>`;
+    });
+  return chips.length
+    ? chips.join('')
+    : '<span class="access-mini-none">Default access only</span>';
+}
+
+// ── Detail drawer ─────────────────────────────────────────────────────────────
+
+function openDrawer(idx) {
+  const d = JOB_DATA[idx];
+  const meta = LEVEL_META[d.level] || { color: '#999', bg: '#eee', label: 'Unknown' };
+
+  document.getElementById('drawer-title').textContent = d.title;
+  document.getElementById('drawer-dept').textContent = d.dept;
+
+  const badge = document.getElementById('drawer-level-badge');
+  badge.textContent = `Level ${d.level} · ${meta.label}`;
+  badge.style.background = meta.bg;
+  badge.style.color = meta.color;
+
+  document.getElementById('drawer-grouping').innerHTML =
+    `<span class="drawer-grouping-label">Grouping:</span> ${esc(d.grouping)}`;
+
+  // Build permissions list grouped by category
+  const cats = { location: [], users: [], column: [], special: [], row: [] };
+  const catLabels = {
+    location: '📍 Location Scope',
+    users:    '👤 User Scope',
+    column:   '📊 Data Columns',
+    row:      '🔢 Row Access',
+    special:  '⭐ Special',
+  };
+
+  // Non-special permissions from PERM_META
+  const nonSpecialCols = PERMISSION_COLS.filter(c =>
+    (PERM_META[c] || {}).cat !== 'special'
+  );
+  const specialCols = PERMISSION_COLS.filter(c =>
+    (PERM_META[c] || {}).cat === 'special'
+  );
+
+  let html = '';
+
+  // Standard permissions (non-special)
+  nonSpecialCols.forEach(col => {
+    const m = PERM_META[col] || { icon: '·', label: col, cat: 'row' };
+    const granted = d.permissions[col];
+    if (!cats[m.cat]) cats[m.cat] = [];
+    cats[m.cat].push({ col, m, granted });
+  });
+
+  ['location', 'users', 'column', 'row'].forEach(cat => {
+    if (!cats[cat] || cats[cat].length === 0) return;
+    html += `<div class="perm-group"><div class="perm-group-title">${catLabels[cat]}</div>`;
+    cats[cat].forEach(({ col, m, granted }) => {
+      html += `<div class="perm-row ${granted ? 'granted' : 'denied'}">
+        <span class="perm-icon">${granted ? '✓' : '✗'}</span>
+        <span class="perm-label">${m.icon} ${m.label}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+
+  document.getElementById('drawer-permissions').innerHTML = html;
+
+  document.getElementById('detail-drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('detail-drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+// ── Utilities ─────────────────────────────────────────────────────────────────
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
+init();
+</script>
+
+</body>
+</html>

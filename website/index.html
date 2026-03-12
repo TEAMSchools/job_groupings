@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Grouping & Permissioning Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Job Grouping Framework</span>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">Overview</a>
+      <a href="explorer.html" class="nav-link">Job Explorer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Proposed Framework · For Stakeholder Review</div>
+    <h1 class="hero-title">A Consistent System for<br />Job Grouping &amp; Data Access</h1>
+    <p class="hero-sub">
+      A structured, rule-based framework that maps every job title to a permission level —
+      ensuring the right people see the right data, automatically.
+    </p>
+    <div class="hero-actions">
+      <a href="explorer.html" class="btn btn-primary">Explore Jobs &amp; Access →</a>
+      <a href="#how-it-works" class="btn btn-ghost">See How It Works</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why It Matters ─────────────────────────────────────────────────────── -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="section-header">
+      <h2>Why This Framework Matters</h2>
+      <p>Data access decisions today are often made case-by-case. This framework makes them automatic, auditable, and consistent.</p>
+    </div>
+    <div class="card-grid-3">
+
+      <div class="why-card">
+        <div class="why-icon" style="background:#ede9fe; color:#7c3aed;">📊</div>
+        <h3>One Definition, Everywhere</h3>
+        <p>
+          Right now, "Teacher" means something different depending on who built the dashboard.
+          One report includes paraprofessionals; another counts TIRs; another doesn't.
+          This framework gives every report, dashboard, and analysis the same definitions —
+          automatically, because they all pull from the same grouping layer.
+        </p>
+        <ul class="why-list">
+          <li>Headcount reports that agree across teams</li>
+          <li>Turnover trends by consistent job group</li>
+          <li>Compensation benchmarking by standardised tier</li>
+          <li>Filters that mean the same thing in every tool</li>
+        </ul>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon" style="background:#dcfce7; color:#15803d;">🔐</div>
+        <h3>Principled Data Access</h3>
+        <p>
+          Instead of granting permissions individually — and inconsistently — every person
+          inherits access rules directly from their job grouping. No more one-off tickets
+          or forgotten over-permissioned accounts.
+        </p>
+        <ul class="why-list">
+          <li>Permission changes flow from job changes</li>
+          <li>Off-boarding removes access automatically</li>
+          <li>Audit trail tied to job records</li>
+        </ul>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon" style="background:#fef3c7; color:#b45309;">🔄</div>
+        <h3>Scales with the Org</h3>
+        <p>
+          When new job titles are created, the system alerts administrators instead of
+          silently granting default (or wrong) access. The mapping CSV is the single
+          source of truth — easy to review and update.
+        </p>
+        <ul class="why-list">
+          <li>Slack alert for any new unrecognised title</li>
+          <li>Admin review queue before access is granted</li>
+          <li>No code changes needed to update groupings</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Default Deny ────────────────────────────────────────────────────────── -->
+<section class="deny-banner">
+  <div class="container">
+    <div class="deny-inner">
+      <div class="deny-icon">🔒</div>
+      <div class="deny-text">
+        <h3>Access is Default Deny</h3>
+        <p>
+          Every person starts with <strong>zero access</strong>. The only data they can see is
+          what their job grouping <em>explicitly</em> grants — nothing more. This means there
+          are no accidental over-permissions, no silent inheritance from old roles, and no
+          guesswork about who can see what. If a permission isn't listed for your level,
+          you don't have it.
+        </p>
+      </div>
+      <div class="deny-pillars">
+        <div class="deny-pillar">
+          <span class="deny-pillar-icon">⛔</span>
+          <span>No access by default</span>
+        </div>
+        <div class="deny-pillar">
+          <span class="deny-pillar-icon">✅</span>
+          <span>Explicit grants only</span>
+        </div>
+        <div class="deny-pillar">
+          <span class="deny-pillar-icon">🔁</span>
+          <span>Revoked on role change</span>
+        </div>
+        <div class="deny-pillar">
+          <span class="deny-pillar-icon">📋</span>
+          <span>Every grant is auditable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ───────────────────────────────────────────────────────── -->
+<section class="section section-alt" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <h2>The 7 Grouping Levels</h2>
+      <p>
+        Every job title is assigned to one of seven levels. Each level inherits a defined
+        set of data access permissions — no configuration needed per person.
+      </p>
+    </div>
+
+    <div class="levels-grid">
+
+      <div class="level-card" style="--level-color: #7c3aed; --level-bg: #ede9fe;">
+        <div class="level-badge">Level 1</div>
+        <h4>Chief Level</h4>
+        <p>KTAF Chiefs and Co-Presidents</p>
+        <div class="level-examples">e.g. Chief Executive Officer, Chief Academic Officer, Co-President</div>
+        <div class="level-access">
+          <span class="access-chip">All Locations</span>
+          <span class="access-chip">All Staff &amp; Students</span>
+          <span class="access-chip">Salary</span>
+          <span class="access-chip">PM Data</span>
+          <span class="access-chip">Survey Access</span>
+        </div>
+      </div>
+
+      <div class="level-card" style="--level-color: #db2777; --level-bg: #fce7f3;">
+        <div class="level-badge">Level 2</div>
+        <h4>EDs, HOSs &amp; MDOs</h4>
+        <p>Senior Regional Leaders: Executive Directors, Heads of Schools, and Managing Directors of Operations</p>
+        <div class="level-examples">e.g. Executive Director, Head of Schools, Managing Director of School Operations</div>
+        <div class="level-access">
+          <span class="access-chip">All Locations in Region</span>
+          <span class="access-chip">All Staff &amp; Students</span>
+          <span class="access-chip">Salary</span>
+          <span class="access-chip">PM Data</span>
+          <span class="access-chip">Survey Access</span>
+        </div>
+      </div>
+
+      <div class="level-card" style="--level-color: #2563eb; --level-bg: #dbeafe;">
+        <div class="level-badge">Level 3</div>
+        <h4>KTAF or Regional Managing Director</h4>
+        <p>Central or regional Managing Directors and Deputy Chiefs</p>
+        <div class="level-examples">e.g. Managing Director of Technology, Managing Director of Human Resources</div>
+        <div class="level-access">
+          <span class="access-chip">All Locations</span>
+          <span class="access-chip">All Staff &amp; Students</span>
+          <span class="access-chip">Salary</span>
+          <span class="access-chip">PM Data</span>
+          <span class="access-chip">Survey Access</span>
+        </div>
+      </div>
+
+      <div class="level-card" style="--level-color: #0891b2; --level-bg: #cffafe;">
+        <div class="level-badge">Level 4</div>
+        <h4>Directors &amp; School Leaders</h4>
+        <p>Three sub-groups: School Leaders, Directors of School Operations (DSOs), and KTAF/Regional Directors</p>
+        <div class="level-examples">e.g. School Leader, Director School Operations, Director of Teaching and Learning, Achievement Director</div>
+        <div class="level-access">
+          <span class="access-chip access-note">Scope varies by sub-group (school only vs. all locations)</span>
+          <span class="access-chip">All Staff &amp; Students</span>
+          <span class="access-chip">Salary</span>
+          <span class="access-chip">PM Data</span>
+          <span class="access-chip">Survey Access</span>
+        </div>
+      </div>
+
+      <div class="level-card" style="--level-color: #059669; --level-bg: #d1fae5;">
+        <div class="level-badge">Level 5</div>
+        <h4>Assistant School Leaders &amp; KTAF Staff</h4>
+        <p>Two sub-groups: Assistant School Leaders (AP salary scale) and individual contributors in central/regional teams</p>
+        <div class="level-examples">e.g. Assistant School Leader, Manager of Finance, Coordinator of Human Resources, Specialist in Technology</div>
+        <div class="level-access">
+          <span class="access-chip">User's School Only <em>(ASLs)</em></span>
+          <span class="access-chip">Teachers &amp; Students Only <em>(ASLs)</em></span>
+          <span class="access-chip access-dim">Default access <em>(KTAF Staff)</em></span>
+        </div>
+      </div>
+
+      <div class="level-card" style="--level-color: #d97706; --level-bg: #fef3c7;">
+        <div class="level-badge">Level 6</div>
+        <h4>School-Based Staff</h4>
+        <p>Five sub-groups: Teachers, Teachers in Residence, Deans, Frontline Ops (ADSOs/SOMs), and all other school-based non-instructional staff</p>
+        <div class="level-examples">e.g. Teacher, Teacher in Residence, Dean of Students, School Operations Manager, Paraprofessional, Social Worker</div>
+        <div class="level-access">
+          <span class="access-chip access-dim">Default access (own school, below-level staff)</span>
+        </div>
+      </div>
+
+      <div class="level-card" style="--level-color: #6b7280; --level-bg: #f3f4f6;">
+        <div class="level-badge">Level 7</div>
+        <h4>Interns &amp; Temporary Assignments</h4>
+        <p>Interns, fellows, and extra-duty/summer assignments</p>
+        <div class="level-examples">e.g. Intern, Fellow, Summer Program Teacher, After School Program Assignment</div>
+        <div class="level-access">
+          <span class="access-chip access-dim">Minimal / default access</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Consistent Definitions ─────────────────────────────────────────────── -->
+<section class="section" id="definitions">
+  <div class="container">
+    <div class="section-header">
+      <h2>Shared Definitions Across Every Report</h2>
+      <p>
+        Today, the same word can mean different things in different dashboards. This framework
+        eliminates that ambiguity by tying every reporting filter directly to a grouping.
+        When all tools pull from the same definitions, cross-team analyses finally add up.
+      </p>
+    </div>
+
+    <div class="defs-comparison">
+      <div class="defs-col defs-before">
+        <div class="defs-col-header">
+          <span class="defs-badge defs-badge-before">Before</span>
+          <span class="defs-col-title">Inconsistent — depends on who built it</span>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"Teacher"</div>
+          <div class="defs-desc">
+            Might include lead teachers only, or also TIRs, paraprofessionals, subs, SPED teachers,
+            instructional aides — depending on the report author's interpretation.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"School Leadership"</div>
+          <div class="defs-desc">
+            Could mean just the School Leader, or all Level 4–5 staff, or anyone with "Leader"
+            in their title. Headcount numbers don't match across teams.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"Ops Staff"</div>
+          <div class="defs-desc">
+            No agreed boundary. Some reports include custodians; others start at SOM;
+            others include central Operations staff.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"Instructional Staff"</div>
+          <div class="defs-desc">
+            Sometimes teachers only, sometimes teachers + coaches + ASLs, sometimes anyone
+            who touches instruction.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"KTAF Staff"</div>
+          <div class="defs-desc">
+            Manually curated lists that go stale. No single agreed definition; different
+            teams maintain their own copies.
+          </div>
+        </div>
+      </div>
+
+      <div class="defs-arrow">→</div>
+
+      <div class="defs-col defs-after">
+        <div class="defs-col-header">
+          <span class="defs-badge defs-badge-after">After</span>
+          <span class="defs-col-title">Consistent — same answer in every tool</span>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"Teacher"</div>
+          <div class="defs-desc">
+            Exactly <strong>Teacher (6)</strong> — lead teachers on the lead teacher salary scale.
+            TIRs are <strong>Teacher in Residence (6)</strong>, paras are
+            <strong>School-based Non-Instructional (6)</strong>. No overlap, no ambiguity.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"School Leadership"</div>
+          <div class="defs-desc">
+            <strong>Level 4 School Leader</strong> grouping = the named school leader or
+            School Leader in Residence. ASLs are their own Level 5 group. Every report
+            uses the same boundary.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"Ops Staff"</div>
+          <div class="defs-desc">
+            School-facing ops = <strong>ADSOs, Ops-SOMs, AOMs &amp; Receptionists (6)</strong>.
+            Central = <strong>KTAF or Regional Staff (5)</strong> in Operations dept.
+            Clearly separated, never conflated.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"Instructional Staff"</div>
+          <div class="defs-desc">
+            Defined as Level 6 groupings: <strong>Teacher (6)</strong> +
+            <strong>Teacher in Residence (6)</strong>. Filters in every dashboard
+            resolve to the same set of people.
+          </div>
+        </div>
+        <div class="defs-row">
+          <div class="defs-term">"KTAF Staff"</div>
+          <div class="defs-desc">
+            Automatically derived: all staff in <strong>KTAF or Regional Staff (5)</strong>
+            and above in central departments. No manual lists to maintain.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="defs-impact">
+      <div class="defs-impact-item">
+        <div class="defs-impact-icon">📐</div>
+        <h4>Headcount that agrees</h4>
+        <p>Finance, HR, and T&amp;L pull the same numbers because they use the same grouping layer.</p>
+      </div>
+      <div class="defs-impact-item">
+        <div class="defs-impact-icon">📉</div>
+        <h4>Accurate trend analysis</h4>
+        <p>Year-over-year comparisons are valid because the definition of "teacher" doesn't change between reports.</p>
+      </div>
+      <div class="defs-impact-item">
+        <div class="defs-impact-icon">🤝</div>
+        <h4>Shared language in meetings</h4>
+        <p>When someone says "teacher turnover," everyone in the room knows exactly which population is being discussed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Access Scenarios ───────────────────────────────────────────────────── -->
+<section class="section section-alt" id="scenarios">
+  <div class="container">
+    <div class="section-header">
+      <h2>Data Access in Practice</h2>
+      <p>What does each level actually mean for day-to-day dashboard and report access?</p>
+    </div>
+
+    <div class="scenarios">
+
+      <div class="scenario-card">
+        <div class="scenario-header" style="background: #ede9fe;">
+          <span class="scenario-level" style="background:#7c3aed;">Level 1</span>
+          <strong>Chief Academic Officer</strong>
+          <span class="scenario-dept">Teaching and Learning</span>
+        </div>
+        <div class="scenario-body">
+          <p>Can view all staff and student data across all schools and locations, including salary, performance management records, and survey responses. Sees the full picture across the network.</p>
+          <div class="scenario-access-list">
+            <div class="access-row yes"><span class="check">✓</span> All staff across all schools and KTAF</div>
+            <div class="access-row yes"><span class="check">✓</span> Salary data for every employee</div>
+            <div class="access-row yes"><span class="check">✓</span> Performance management records</div>
+            <div class="access-row yes"><span class="check">✓</span> Survey drilldown and individual responses</div>
+            <div class="access-row yes"><span class="check">✓</span> Student data across the network</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header" style="background: #fce7f3;">
+          <span class="scenario-level" style="background:#db2777;">Level 2</span>
+          <strong>Head of Schools</strong>
+          <span class="scenario-dept">School Support</span>
+        </div>
+        <div class="scenario-body">
+          <p>Can view all staff and student data within their region — every school under their purview — including salary and performance records, but scoped to their region rather than the full network.</p>
+          <div class="scenario-access-list">
+            <div class="access-row yes"><span class="check">✓</span> All schools in their region</div>
+            <div class="access-row yes"><span class="check">✓</span> All staff and students within region</div>
+            <div class="access-row yes"><span class="check">✓</span> Salary and PM data (region only)</div>
+            <div class="access-row no"><span class="cross">✗</span> Schools outside their region</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header" style="background: #cffafe;">
+          <span class="scenario-level" style="background:#0891b2;">Level 4</span>
+          <strong>Director, Teaching &amp; Learning</strong>
+          <span class="scenario-dept">Teaching and Learning (KTAF)</span>
+        </div>
+        <div class="scenario-body">
+          <p>As a KTAF Director, can see staff across all locations but only within their department — Teaching and Learning. Cannot see salaries or records in unrelated departments. Can still see all salary and PM data within their department's scope.</p>
+          <div class="scenario-access-list">
+            <div class="access-row yes"><span class="check">✓</span> All school locations</div>
+            <div class="access-row yes"><span class="check">✓</span> Staff and students in their department</div>
+            <div class="access-row yes"><span class="check">✓</span> Salary data (dept-scoped)</div>
+            <div class="access-row no"><span class="cross">✗</span> Staff data outside their department</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header" style="background: #dbeafe;">
+          <span class="scenario-level" style="background:#2563eb;">Level 4</span>
+          <strong>School Leader</strong>
+          <span class="scenario-dept">School Leadership</span>
+        </div>
+        <div class="scenario-body">
+          <p>Can see all staff and student data at their own school only — including salaries and PM records. This gives School Leaders everything they need to manage their building without access to other schools.</p>
+          <div class="scenario-access-list">
+            <div class="access-row yes"><span class="check">✓</span> All staff and students at their school</div>
+            <div class="access-row yes"><span class="check">✓</span> Salary and PM data (their school)</div>
+            <div class="access-row yes"><span class="check">✓</span> Survey access (their school)</div>
+            <div class="access-row no"><span class="cross">✗</span> Any data from other schools</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header" style="background: #d1fae5;">
+          <span class="scenario-level" style="background:#059669;">Level 5</span>
+          <strong>Assistant School Leader</strong>
+          <span class="scenario-dept">School Leadership</span>
+        </div>
+        <div class="scenario-body">
+          <p>Sees teacher and student data at their school — enough to support instructional leadership — but not access to all staff types (e.g., operations staff) or cross-school data.</p>
+          <div class="scenario-access-list">
+            <div class="access-row yes"><span class="check">✓</span> Teachers and students at their school</div>
+            <div class="access-row yes"><span class="check">✓</span> Salary and PM data (teachers at school)</div>
+            <div class="access-row no"><span class="cross">✗</span> Operations or support staff data</div>
+            <div class="access-row no"><span class="cross">✗</span> Data from other schools</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header" style="background: #fef3c7;">
+          <span class="scenario-level" style="background:#d97706;">Level 6</span>
+          <strong>Teacher</strong>
+          <span class="scenario-dept">Math</span>
+        </div>
+        <div class="scenario-body">
+          <p>Default access — can see their own records and their students' academic data. Cannot see colleague salaries, PM records, or data outside their classroom.</p>
+          <div class="scenario-access-list">
+            <div class="access-row yes"><span class="check">✓</span> Their own staff record</div>
+            <div class="access-row yes"><span class="check">✓</span> Their students' data</div>
+            <div class="access-row no"><span class="cross">✗</span> Salary data for any colleague</div>
+            <div class="access-row no"><span class="cross">✗</span> PM data for peers</div>
+            <div class="access-row no"><span class="cross">✗</span> Any cross-school data</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Special Access ─────────────────────────────────────────────────────── -->
+<section class="section section-alt" id="special">
+  <div class="container">
+    <div class="section-header">
+      <h2>Special Access Designations</h2>
+      <p>
+        Some roles require data access that goes beyond what their job grouping level
+        provides. These are granted as named team designations — applied to individuals
+        in addition to their standard level permissions.
+      </p>
+    </div>
+
+    <div class="card-grid-2">
+
+      <div class="special-card">
+        <div class="special-icon">👤</div>
+        <div>
+          <h4>CEO</h4>
+          <p>The Chief Executive Officer receives unrestricted access to all data across all locations, departments, and data types — including salary, PM, and survey responses.</p>
+          <div class="special-who">Applies to: Chief Executive Officer</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-icon">📊</div>
+        <div>
+          <h4>Data Team</h4>
+          <p>Members of the Data team require access to all data to build and maintain dashboards, pipelines, and reports. This designation grants full read access across all data types.</p>
+          <div class="special-who">Applies to: Data department staff</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-icon">🧑‍💼</div>
+        <div>
+          <h4>HR Team</h4>
+          <p>Human Resources staff need access to all staff records — including sensitive employment data — regardless of location or department. Does not extend to student data.</p>
+          <div class="special-who">Applies to: Human Resources department staff</div>
+        </div>
+      </div>
+
+      <div class="special-card">
+        <div class="special-icon">💰</div>
+        <div>
+          <h4>Finance, Accounting &amp; Compliance Team</h4>
+          <p>Finance, Accounting, and Compliance staff require full data access to support budgeting, auditing, and regulatory reporting across the organisation.</p>
+          <div class="special-who">Applies to: Finance, Accounting, and Compliance department staff</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="special-note">
+      <strong>Note:</strong> Special designations are layered <em>on top of</em> a person's standard level permissions.
+      They are assigned per-individual and should be reviewed during onboarding, role changes, and offboarding.
+    </div>
+  </div>
+</section>
+
+<!-- ── Temporary Access ───────────────────────────────────────────────────── -->
+<section class="section" id="temp-access">
+  <div class="container">
+    <div class="section-header">
+      <h2>One-Off &amp; Temporary Access Requests</h2>
+      <p>
+        Standard job-grouping permissions cover the vast majority of access needs.
+        When someone needs access that goes beyond their level — for a project, an audit,
+        or a time-limited initiative — it can be granted explicitly, with a built-in
+        expiration date and a full audit trail.
+      </p>
+    </div>
+
+    <div class="temp-flow">
+      <div class="temp-step">
+        <div class="temp-step-num">1</div>
+        <div class="temp-step-body">
+          <h4>Request</h4>
+          <p>Requester submits an access request specifying the data scope needed, the business reason, and a proposed expiration date.</p>
+        </div>
+      </div>
+      <div class="temp-flow-arrow">→</div>
+      <div class="temp-step">
+        <div class="temp-step-num">2</div>
+        <div class="temp-step-body">
+          <h4>Approve</h4>
+          <p>An authorised approver (typically the relevant department head or data steward) reviews and approves or denies the request.</p>
+        </div>
+      </div>
+      <div class="temp-flow-arrow">→</div>
+      <div class="temp-step">
+        <div class="temp-step-num">3</div>
+        <div class="temp-step-body">
+          <h4>Grant</h4>
+          <p>Access is granted with a hard expiration date. The grant is logged with timestamp, approver, scope, and reason.</p>
+        </div>
+      </div>
+      <div class="temp-flow-arrow">→</div>
+      <div class="temp-step">
+        <div class="temp-step-num">4</div>
+        <div class="temp-step-body">
+          <h4>Expire</h4>
+          <p>Access is automatically revoked at the cut-off date. No manual follow-up required — and no risk of forgotten permissions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mock audit log -->
+    <h3 class="audit-log-title">Access Audit Log — Example</h3>
+    <p class="audit-log-sub">Every grant is timestamped so you always know who had access to what, and when.</p>
+    <div class="audit-log">
+      <div class="audit-log-header">
+        <span>Person</span>
+        <span>Standard Level</span>
+        <span>Temporary Grant</span>
+        <span>Reason</span>
+        <span>Approved By</span>
+        <span>Granted</span>
+        <span>Expires</span>
+        <span>Status</span>
+      </div>
+
+      <div class="audit-row">
+        <span class="audit-person">Jane Sample<br/><small>Coordinator, T&amp;L</small></span>
+        <span><span class="audit-level" style="background:#d1fae5;color:#059669;">5</span></span>
+        <span class="audit-grant">Salary data — all schools</span>
+        <span class="audit-reason">Compensation benchmarking project</span>
+        <span class="audit-approver">J. Example, MD T&amp;L</span>
+        <span class="audit-date">2026-01-15 09:32</span>
+        <span class="audit-date">2026-03-31</span>
+        <span class="audit-status audit-active">Active</span>
+      </div>
+
+      <div class="audit-row">
+        <span class="audit-person">Alex Placeholder<br/><small>Manager, Finance</small></span>
+        <span><span class="audit-level" style="background:#d1fae5;color:#059669;">5</span></span>
+        <span class="audit-grant">All schools — survey data</span>
+        <span class="audit-reason">Annual budget review</span>
+        <span class="audit-approver">S. Demo, CFO</span>
+        <span class="audit-date">2026-01-03 14:11</span>
+        <span class="audit-date">2026-02-28</span>
+        <span class="audit-status audit-expired">Expired</span>
+      </div>
+
+      <div class="audit-row">
+        <span class="audit-person">Chris Example<br/><small>Specialist, HR</small></span>
+        <span><span class="audit-level" style="background:#d1fae5;color:#059669;">5</span></span>
+        <span class="audit-grant">PM data — Region A</span>
+        <span class="audit-reason">Performance cycle review support</span>
+        <span class="audit-approver">R. Sample, MD HR</span>
+        <span class="audit-date">2026-02-10 11:05</span>
+        <span class="audit-date">2026-04-15</span>
+        <span class="audit-status audit-active">Active</span>
+      </div>
+
+      <div class="audit-row">
+        <span class="audit-person">Morgan Test<br/><small>Analyst, Data</small></span>
+        <span><span class="audit-level" style="background:#d1fae5;color:#059669;">5</span></span>
+        <span class="audit-grant">Salary + PM — all depts</span>
+        <span class="audit-reason">Equity analysis for board report</span>
+        <span class="audit-approver">T. Placeholder, Chief People Officer</span>
+        <span class="audit-date">2026-03-01 08:44</span>
+        <span class="audit-date">2026-03-31</span>
+        <span class="audit-status audit-active">Active</span>
+      </div>
+    </div>
+
+    <div class="temp-principles">
+      <div class="temp-principle">
+        <span class="temp-principle-icon">📅</span>
+        <div>
+          <strong>Hard expiration dates</strong>
+          <p>Every temporary grant must have a cut-off date. Access cannot be granted indefinitely through this mechanism.</p>
+        </div>
+      </div>
+      <div class="temp-principle">
+        <span class="temp-principle-icon">🔍</span>
+        <div>
+          <strong>Full audit trail</strong>
+          <p>Every grant is logged with who requested it, who approved it, the scope, the reason, and timestamps for both grant and expiry.</p>
+        </div>
+      </div>
+      <div class="temp-principle">
+        <span class="temp-principle-icon">🔔</span>
+        <div>
+          <strong>Expiry notifications</strong>
+          <p>Automated reminders are sent before access expires, so requesters can re-apply if the need is ongoing — rather than access silently lapsing mid-project.</p>
+        </div>
+      </div>
+      <div class="temp-principle">
+        <span class="temp-principle-icon">⬆️</span>
+        <div>
+          <strong>Recurring need → role review</strong>
+          <p>If a temporary grant is renewed repeatedly, that's a signal the person's job grouping may need to be revisited — not that temporary access should become permanent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How the System Works ───────────────────────────────────────────────── -->
+<section class="section" id="system">
+  <div class="container">
+    <div class="section-header">
+      <h2>How the System Works</h2>
+      <p>Three files and a simple Python classifier power the entire framework.</p>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="pipeline-num">1</div>
+        <div class="pipeline-content">
+          <h4>Source of Truth (SOT)</h4>
+          <p><code>allowed_jobs_sot.csv</code> — the canonical list of every allowed job title and department combination in the organisation.</p>
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">2</div>
+        <div class="pipeline-content">
+          <h4>Classifier</h4>
+          <p>A rule-based Python algorithm maps each (job title, department) pair to a grouping using priority-ordered pattern matching. Ambiguous cases are flagged for admin review.</p>
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">3</div>
+        <div class="pipeline-content">
+          <h4>Mapping CSV</h4>
+          <p><code>job_groupings_mapping.csv</code> — the editable output. Admins can override any auto-generated grouping here. This is the source of truth for runtime lookups.</p>
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">4</div>
+        <div class="pipeline-content">
+          <h4>New Job Alert</h4>
+          <p>Any job title not in the mapping triggers a Slack alert. An admin reviews it and adds it to the mapping before access is granted — no silent permission escalation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="container" style="text-align:center;">
+    <h2>Ready to explore the full job list?</h2>
+    <p>Browse all 287 job–department combinations, filter by level, and see exactly what data access each role receives.</p>
+    <a href="explorer.html" class="btn btn-primary btn-lg">Open Job Explorer →</a>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <p>Job Grouping &amp; Permissioning Framework · KIPP NJ/Miami · Proposed for stakeholder review</p>
+  </div>
+</footer>
+
+</body>
+</html>

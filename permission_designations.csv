@@ -1,0 +1,16 @@
+﻿Rule Name,Limitation Type,Rule type,Definition,Note
+Peers or Above,Row,Peers - General,User can see peers and above ,"Without this designation, users can only see staff information for people below their numeric level (not inclusive of their own level)"
+All Locations,Row,Location - General,User can see all locations,
+User’s Department Only,Row,Location - General,User can see information in their department only,
+All Schools,Row,Location - General,User can see all schools,
+All Locations in Region,Row,Location - General,User can see all locations in region,
+User’s School Only,Row,Location - General,User can see information at their school only,
+All Staff/Students,Row,Users - General,User can see all staff and Students,
+Teachers & Students Only,Row,Users - General,User can see all teacher and student data,
+Survey Access,Column,Column - General,Users can see detailed survey drilldown,
+Salary,Column,Column - General,User can see salary information,
+PM Data,Column,Column - General,User can see PM Data,
+Data Team,Row,Special,User can see all data,
+CEO,Row,Special,User can see all data,
+HR Team,Row,Special,User can see all staff data,
+"Finance, Accounting, and Compliance Team",Row,Special,User can see all data,
