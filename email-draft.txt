@@ -1,0 +1,29 @@
+Subject: Job Grouping Framework Update: Job Functions Loaded in ADP
+
+Hi all,
+
+Quick update on the job grouping and permissioning framework — a structured
+system that maps every job title to a consistent grouping and set of data
+access rules. You can see the full framework here: [FRAMEWORK URL]
+
+What we did: We've completed the first implementation step — loading the job
+groupings into ADP as Job Functions. This field is the foundation for
+consistent definitions across reports, dashboards, and eventually automated
+data access.
+
+Where we are: The Job Function field has been configured in ADP, but we're not
+yet seeing it appear on employee profiles. We've completed what we expected to
+do on our end and are now investigating what additional step is needed.
+
+Ask for HR/Talent: Could someone with ADP admin access help look into this?
+The question is whether getting the field to populate on profiles requires an
+additional configuration step, a sync to be triggered, or a support ticket
+with ADP. Happy to connect with whoever is the right person.
+
+What comes next: Once employee profiles are reflecting their Job Function,
+we'll be able to start connecting the groupings to downstream tools and
+reports. I'll send a follow-up note when that step is live.
+
+Let me know if you have questions.
+
+[YOUR NAME]

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rollout Status · Job Grouping Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Job Grouping Framework</span>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Overview</a>
+      <a href="explorer.html" class="nav-link">Job Explorer</a>
+      <a href="status.html" class="nav-link active">Status</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Page header ────────────────────────────────────────────────────────── -->
+<div class="explorer-header">
+  <div class="container">
+    <h1>Rollout Status</h1>
+    <p>Live tracking of the job grouping framework implementation progress.</p>
+  </div>
+</div>
+
+<!-- ── Summary bar ────────────────────────────────────────────────────────── -->
+<div class="status-summary-bar">
+  <div class="container">
+    <div class="status-summary-inner">
+      <div class="status-indicator status-indicator--blocked">
+        <span class="status-dot"></span>
+        In Progress
+      </div>
+      <p class="status-summary-desc">Investigating ADP profile sync</p>
+    </div>
+    <div class="status-progress">
+      <div class="status-progress-track">
+        <div class="status-progress-fill" style="width: 40%;"></div>
+      </div>
+      <span class="status-progress-label">2 of 5 phases complete</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Phase tracker ──────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="phase-list">
+
+      <div class="phase-item">
+        <div class="phase-header">
+          <span class="phase-name">Framework designed and published</span>
+          <span class="phase-badge phase-badge--complete">✓ Complete</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-header">
+          <span class="phase-name">Job Functions loaded in ADP</span>
+          <span class="phase-badge phase-badge--complete">✓ Complete</span>
+        </div>
+      </div>
+
+      <div class="phase-item phase-item--blocked">
+        <div class="phase-header">
+          <span class="phase-name">Job Functions flowing to employee profiles</span>
+          <span class="phase-badge phase-badge--blocked">⚠ Open Question</span>
+        </div>
+        <div class="phase-note">
+          <strong>Investigating:</strong> Job Functions have been loaded in ADP but are not yet
+          appearing on employee profiles. It is unclear whether this requires an additional ADP
+          configuration step, a sync to be triggered, or a support ticket. We are working with
+          HR/Talent to determine next steps.
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-header">
+          <span class="phase-name">Data pipelines consuming Job Function field</span>
+          <span class="phase-badge phase-badge--pending">Pending</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-header">
+          <span class="phase-name">Updating groupings across tools and dashboards</span>
+          <span class="phase-badge phase-badge--pending">Pending</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-header">
+          <span class="phase-name">Permissions framework live</span>
+          <span class="phase-badge phase-badge--pending">Pending</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-header">
+          <span class="phase-name">Updates / changes to job group mappings</span>
+          <span class="phase-badge phase-badge--ongoing">Ongoing</span>
+        </div>
+        <div class="phase-note">
+          The mapping CSV is the single source of truth. Updates are reviewed and applied on a
+          rolling basis as new job titles are created or existing mappings need correction.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
