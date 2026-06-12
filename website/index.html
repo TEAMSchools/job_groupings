@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -802,6 +802,123 @@
 </section>
 
 <!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+
+
+<!-- ── Permissions Framework Design ──────────────────────────────────── -->
+<section class="section section-alt" id="permissions-framework">
+  <div class="container">
+
+    <div class="section-header" style="text-align:left; margin-bottom:28px;">
+      <h2>Permissions Framework Design</h2>
+      <p>Cube reads multiple fields from ADP/HR records to determine what each person can see — not just job title or level, but the combination of <strong>job function code</strong>, <strong>entity</strong> (KTAF vs. Regional), <strong>department type</strong> (instructional vs. non-instructional), and <strong>assigned department name</strong> (for special-access teams). Two new dbt models derive and cache these rules, replacing manual Google Workspace group enrollment entirely.</p>
+    </div>
+
+    <div class="pf-models">
+      <div class="pf-model-card">
+        <code>dim_staff_cube_access</code>
+        <h4>Access Rules Model</h4>
+        <p>One row per active staff member. Resolves each person to a scope tier, student/staff access levels, and per-field visibility flags — derived from their job function code, entity (KTAF vs. Region), and department type.</p>
+      </div>
+      <div class="pf-model-card">
+        <code>dim_staff_reporting_chain</code>
+        <h4>Reporting Chain Model</h4>
+        <p>Transitive closure of the org tree (manager &rarr; every direct and indirect report). Used to grant detail-level access to a manager&rsquo;s own downline. Keyed on a stable <code style="display:inline;border:none;background:none;padding:0;font-size:inherit;">staff_key</code>, not email.</p>
+      </div>
+    </div>
+
+    <h3 class="pf-subheading">Role-Based Access Mapping</h3>
+    <p class="pf-intro">The 3-part key <strong>(job function code &times; entity &times; department type)</strong> determines access for each role. Access varies by all three dimensions — for example, MGDIR differs between KTAF and Region, and between instructional and non-instructional departments.</p>
+    <div class="pf-table-wrap">
+      <table class="pf-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Entity</th>
+            <th>Dept Type</th>
+            <th>Level</th>
+            <th>Scope</th>
+            <th>Student</th>
+            <th>Staff</th>
+            <th>Stu PII</th>
+            <th>Staff PII</th>
+            <th>Comp</th>
+            <th>Benefits</th>
+            <th>Obs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="col-code">CHIEF</td><td>—</td><td>—</td><td>1</td><td><span class="pf-scope-tag pf-scope-network">network</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td class="col-code">EDHOS</td><td>—</td><td>—</td><td>2</td><td><span class="pf-scope-tag pf-scope-region">region</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td class="col-code">SL</td><td>—</td><td>—</td><td>4</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td class="col-code">DSO</td><td>—</td><td>—</td><td>4</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td class="col-code">ASL</td><td>—</td><td>—</td><td>5</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-teaching">teach-only</span></td><td><span class="pf-cell-teaching">teach-only</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-teaching">teach-only</span></td></tr>
+          <tr><td class="col-code">DEAN</td><td>—</td><td>—</td><td>6</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">SCOPS</td><td>—</td><td>—</td><td>6</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">NINST</td><td>—</td><td>—</td><td>6</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">TEACH</td><td>—</td><td>—</td><td>6</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">TIR</td><td>—</td><td>—</td><td>6</td><td><span class="pf-scope-tag pf-scope-school">school</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">MGDIR</td><td>KTAF</td><td>instructional</td><td>3</td><td><span class="pf-scope-tag pf-scope-network">network</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">DIR</td><td>KTAF</td><td>instructional</td><td>4</td><td><span class="pf-scope-tag pf-scope-netdept">network+dept</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">KTRGS</td><td>KTAF</td><td>instructional</td><td>5</td><td><span class="pf-scope-tag pf-scope-netdept">network+dept</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">MGDIR</td><td>KTAF</td><td>non-instructional</td><td>3</td><td><span class="pf-scope-tag pf-scope-network">network</span></td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">DIR</td><td>KTAF</td><td>non-instructional</td><td>4</td><td><span class="pf-scope-tag pf-scope-netdept">network+dept</span></td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">KTRGS</td><td>KTAF</td><td>non-instructional</td><td>5</td><td><span class="pf-scope-tag pf-scope-netdept">network+dept</span></td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">MGDIR</td><td>Region</td><td>instructional</td><td>3</td><td><span class="pf-scope-tag pf-scope-region">region</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">DIR</td><td>Region</td><td>instructional</td><td>4</td><td><span class="pf-scope-tag pf-scope-regdept">region+dept</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">KTRGS</td><td>Region</td><td>instructional</td><td>5</td><td><span class="pf-scope-tag pf-scope-regdept">region+dept</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">MGDIR</td><td>Region</td><td>non-instructional</td><td>3</td><td><span class="pf-scope-tag pf-scope-region">region</span></td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">DIR</td><td>Region</td><td>non-instructional</td><td>4</td><td><span class="pf-scope-tag pf-scope-regdept">region+dept</span></td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+          <tr><td class="col-code">KTRGS</td><td>Region</td><td>non-instructional</td><td>5</td><td><span class="pf-scope-tag pf-scope-regdept">region+dept</span></td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-summary">sum+chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-chain">chain</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-chain">chain</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pf-table-note"><strong>sum+chain</strong> = summary across scope + detail on reporting chain only &nbsp;&middot;&nbsp; <strong>chain</strong> = visible for reporting-chain rows only &nbsp;&middot;&nbsp; <strong>teach-only</strong> = visible for TEACH/TIR job functions only</p>
+
+    <h3 class="pf-subheading">Department Special-Access Overrides</h3>
+    <p class="pf-intro" style="margin-bottom:16px;">Eight departments receive network-wide access regardless of job function code. The department override wins entirely when it matches — there is no field-by-field merge with the role mapping.</p>
+    <div class="pf-table-wrap">
+      <table class="pf-table">
+        <thead>
+          <tr>
+            <th>Department</th>
+            <th>Student</th>
+            <th>Staff</th>
+            <th>Stu PII</th>
+            <th>Staff PII</th>
+            <th>Comp</th>
+            <th>Benefits</th>
+            <th>Obs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Executive</td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td>Data</td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td>Human Resources</td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td>Leadership Development</td><td><span class="pf-cell-summary">summary</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td>Teacher Development</td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td></tr>
+          <tr><td>Accounting</td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td></tr>
+          <tr><td>Finance</td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td></tr>
+          <tr><td>Compliance</td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-detail">detail</span></td><td><span class="pf-cell-none">none</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-all">all</span></td><td><span class="pf-cell-none">none</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pf-table-note">All department overrides use network scope. Fields marked <strong>all</strong> or <strong>none</strong> are unconditional — no reporting-chain narrowing applies.</p>
+
+    <h3 class="pf-subheading">Implementation Sequence</h3>
+    <ol class="pf-impl-list">
+      <li><strong>Build <code>dim_staff_reporting_chain</code></strong> — recursive transitive closure of the org tree.</li>
+      <li><strong>Build <code>dim_staff_cube_access</code></strong> — department override &rarr; role CASE; confirm <code>job_function_code</code> values and department rollup first.</li>
+      <li><strong>Add view access policy tiers</strong> — split into <code>-summary</code> / <code>-detail</code> / <code>-pii</code> group tiers (additive; safe to deploy independently).</li>
+      <li><strong>Rewrite <code>cube.js</code></strong> — replace Google Admin Directory API with two BigQuery reads; scope + reporting-chain filters in <code>queryRewrite</code>.</li>
+      <li><strong>Apply cube renames</strong> — drop <code>dim_</code> / <code>fct_</code> prefixes; add schema test enforcing the new naming.</li>
+      <li><strong>Validate in Dev Mode</strong> — test emails at each tier: network, region, school, summary-only, manager with reportees, special-access department, no access.</li>
+      <li><strong>Deploy to production</strong> — spot-check each tier after at least one full school day.</li>
+      <li><strong>Retire Google Workspace groups</strong> — remove all <code>cube-*</code> groups once production is validated.</li>
+    </ol>
+
+  </div>
+</section>
+
 <section class="cta-section">
   <div class="container" style="text-align:center;">
     <h2>Ready to explore the full job list?</h2>
@@ -819,3 +936,4 @@
 
 </body>
 </html>
+
